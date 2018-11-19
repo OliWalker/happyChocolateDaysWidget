@@ -2,24 +2,51 @@ import React, { Component } from 'react';
 import SizeChoice from './components/SizeChoice';
 import Filling from './components/Filling';
 import Decoration from './components/Decoration';
+import ChocolateChoice from './components/ChocolateChoice';
 
 import helpers from '../helpers';
-
-const Pages = [<SizeChoice />, <Decoration />];
+import Designing from './components/Designing';
 
 export default class Plugin extends Component {
-  state = {
-    page: Pages[0],
-    size: '',
-    type: '',
-    words: ''
+  constructor() {
+    super();
+    this.state = {
+      page: 0,
+      size: 16,
+      decoration: '',
+      filling: '',
+      word: ''
+    };
+
+    this.Pages = [
+      <SizeChoice change={this.handleStateChange} active={this.state.size} />,
+      <Decoration
+        change={this.handleStateChange}
+        active={this.state.decoration}
+      />,
+      <Filling change={this.handleStateChange} active={this.state.filling} />,
+      <ChocolateChoice change={this.handleStateChange} />,
+      <Designing
+        change={this.handleStateChange}
+        active={this.state.filling}
+        options={this.state}
+      />
+    ];
+  }
+
+  componentDidMount() {
+    this.setState({ page: this.Pages[3] });
+  }
+
+  handleStateChange = (key, val) => {
+    this.setState({ [key]: val });
   };
 
   handlePageChange = dir => {
-    let index = Pages.indexOf(this.state.page) + dir;
+    let index = this.Pages.indexOf(this.state.page) + dir;
     if (index < 0) index = helpers.sizes.length - 1;
-    if (index === Pages.length) index = 0;
-    this.setState({ page: Pages[index] });
+    if (index === this.Pages.length) index = 0;
+    this.setState({ page: this.Pages[index] });
   };
 
   render() {
@@ -32,12 +59,20 @@ export default class Plugin extends Component {
       display: 'flex',
       justifyContent: 'center',
       alignItems: 'flex-start',
-      position: 'relative'
+      position: 'relative',
+      overflow: 'hidden'
     };
 
     return (
       <div style={divStyle}>
-        {this.state.page}
+        <div style={{ ...helpers.flex('column'), width: '100%' }}>
+          <p style={{ fontSize: '3rem', fontWeight: 'bold', margin: '15px' }}>
+            Choose Your Filling!
+          </p>
+
+          {this.state.page}
+        </div>
+
         <div>
           <button
             className="navButton backButton"

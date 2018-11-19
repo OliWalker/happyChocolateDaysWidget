@@ -1,0 +1,23 @@
+.filling__fadeOut {
+  opacity: 0;
+  transition: opacity .2s ease-out;
+}
+
+.filling__center {
+  transform: translateX(55%);
+  transition: transform .3s ease-in;
+}
+
+/* .filling__spaceLeft {
+  margin-right: 50%;
+} */
+
+.filling__fondont {
+  transform: translateX(-220%);
+  transition: transform .3s ease-in;
+}
+
+.filling__farout {
+  transform: translateX(-900px);
+  transition: transform .6s cubic-bezier(.46, 1.13, .76, 1.11)
+}

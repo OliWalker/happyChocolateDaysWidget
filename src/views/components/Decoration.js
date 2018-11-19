@@ -1,21 +1,26 @@
 import React, { Component } from 'react';
 import helpers from '../../helpers';
+import '../../App.css';
 
 export default class Decoration extends Component {
   state = {
-    center: ''
+    center: '',
+    active: ''
   };
 
   renderCard = (el, i) => (
     <div
-      /* onMouseOver={e => e.target.classList.add('grow')}
-      onMouseLeave={e => e.target.classList.remove('grow')} */
       key={i}
       style={{
         borderRadius: '12px',
         boxShadow: '0px 4px 7px 4px rgba(30,30,30,0.1)',
         marginLeft: '25px'
       }}
+      onClick={() => {
+        this.props.change('decoration', el.header);
+        this.setState({ active: el.header });
+      }}
+      className={this.state.active === el.header ? 'active' : ''}
     >
       <img
         src={el.img}
@@ -34,15 +39,10 @@ export default class Decoration extends Component {
 
   render() {
     return (
-      <div style={{ ...helpers.flex('column'), width: '100%' }}>
-        <p style={{ fontSize: '3rem', fontWeight: 'bold', margin: '15px' }}>
-          Choose Your Decoration!
-        </p>
-        <div id="decoration__carosel">
-          {[...helpers.decorations, ...helpers.decorations].map((el, i) =>
-            this.renderCard(el, i)
-          )}
-        </div>
+      <div className="decoration__carosel">
+        {[...helpers.decorations, ...helpers.decorations].map((el, i) =>
+          this.renderCard(el, i)
+        )}
       </div>
     );
   }

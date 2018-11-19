@@ -15,11 +15,7 @@ export default class SizeChoice extends Component {
 
   render() {
     return (
-      <div style={helpers.flex('column')}>
-        <p style={{ fontSize: '3rem', fontWeight: 'bold', margin: '15px' }}>
-          Choose Your Size!
-        </p>
-
+      <div>
         <i
           className="sizeArrow sizeArrow__left fas fa-chevron-left"
           onClick={() => this.handleArrow(-1)}
@@ -29,9 +25,19 @@ export default class SizeChoice extends Component {
           onClick={() => this.handleArrow(1)}
         />
 
-        <div style={{ textAlign: 'center' }}>
+        <div
+          style={{ textAlign: 'center' }}
+          onClick={() => this.props.change('size', this.state.choice.size)}
+        >
           <div style={{ marginTop: '-10px' }}>
-            <img src={this.state.choice.img} style={{ maxHeight: '280px' }} />
+            <img
+              src={this.state.choice.img}
+              style={{ maxHeight: '280px' }}
+              onClick={() => this.setState({ active: this.state.choice.size })}
+              class={
+                this.state.active === this.state.choice.size ? 'active' : null
+              }
+            />
           </div>
           <p>{this.state.choice.desc}</p>
           <p style={{ fontWeight: 'bold', fontSize: '2.2rem' }}>{`£${this.state
